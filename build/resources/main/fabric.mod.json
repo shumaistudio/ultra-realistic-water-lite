@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "realistic-water",
+	"version": "1.2.3-lite.3",
+	"name": "Ultra Realistic Water lite",
+	"description": "Lightweight modified version of Realistic Water by Skaffy: simple translucent fluids, adjustable simulation/mesh detail and an adaptive performance budget for integrated GPUs. Not the original mod. Original: https://github.com/sskaffy/Realistic-Water",
+	"authors": [
+		"Skaffy (original author)"
+	],
+	"contact": {
+		"homepage": "https://github.com/sskaffy/Realistic-Water",
+		"sources": "https://github.com/sskaffy/Realistic-Water"
+	},
+	"license": "Custom License",
+	"icon": "assets/realistic-water/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"me.skaffy.RealisticWater"
+		],
+		"client": [
+			"me.skaffy.client.RealisticWaterClient"
+		]
+	},
+	"mixins": [
+		"realistic-water.mixins.json",
+		{
+			"config": "realistic-water.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
