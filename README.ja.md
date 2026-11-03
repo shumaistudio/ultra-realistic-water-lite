@@ -6,8 +6,8 @@
 > 元のプロジェクト: https://github.com/sskaffy/Realistic-Water (ぜひ本家も応援してください)
 > 元のライセンスに従って配布しています([LICENSE](LICENSE) はそのまま)。販売・有料化は禁止です。
 
-Realistic Water を、内蔵GPU(例: Ryzen 5 7000 シリーズ + メモリ16GB)でも動かしやすくした軽量版です(Fabric / Minecraft 26.3)。
-水・溶岩・スライム・砂・葉のシミュレーション本体は元MODのGPUシミュレーションで、このフォークは「描画の仕方」と「処理の重さ」を変えています。
+**Realistic Water 1.3** をベースにした軽量版です(Fabric / Minecraft 26.3)。内蔵GPU(例: Ryzen 5 7000 シリーズ + メモリ16GB)でも動かしやすいように調整しています。
+流体シミュレーションと、1.3で追加された機能(リアルなブロック・ボート、沸騰と蒸気、雨、ウォーターポンプ、ポータル、TNT、Sodiumメニュー、Vitrail対応など)は本家作者の作品です。このフォークは「流体の描画の仕方」と「処理の重さ」を変えています。
 
 ## 元MODとの違い
 - **シンプルな半透明の流体**: 反射・屈折・さざ波・太陽の反射光・泡のレース模様をなくしました。水は単色+不透明度で描画され、深さによるかすみやぼかしもありません(`simpleShading` で切り替え)。
@@ -16,9 +16,11 @@ Realistic Water を、内蔵GPU(例: Ryzen 5 7000 シリーズ + メモリ16GB)�
 - **自動負荷調整**: フレーム時間が `targetFrameMs` を超えたらサブステップ数を減らします(設定値以上には増やしません)。
 - `chunkScansPerTick`(CPU側): 新しく読み込んだチャンクで流体ブロックを見つける速さを変えます。
 - 初期設定を軽くし、白波は初期オフ。水面メッシュの細かさを変えると即座に作り直されます。
-- **オプション → ビデオ設定 → 「水の設定...」** から設定を開けます(`/water gui` でも可)。
+- **オプション → ビデオ設定 → 「水の設定...」**、`/water gui`、Sodium導入時はSodiumのビデオ設定(「Performance (lite)」「Water color (lite)」ページも追加)から設定できます。
 - 日本語対応。
 - 名前を *Ultra Realistic Water lite* に変更(MOD ID は `realistic-water` のままなので、元MODとワールド・アイテムの互換性があります)。
+
+注意: シンプル半透明の描画は、このMOD自身の描画に対して効きます。Vitrail経由でOptiFine/Iris形式のシェーダーを読み込んだ場合、水の見た目はシェーダー側が決めます。
 
 シミュレーションは Vulkan のコンピュートシェーダーでGPU上で動くため、CPUコアを増やしても速くなりません。内蔵GPUでは `qualityPreset`・`resolution`・`surfaceSubdivision` が効きます。メモリはデュアルチャネルにすると内蔵GPUがかなり速くなります。
 
@@ -28,7 +30,6 @@ Realistic Water を、内蔵GPU(例: Ryzen 5 7000 シリーズ + メモリ16GB)�
 3. オプション → ビデオ設定で **グラフィックスAPIを Vulkan** にして再起動します。
 4. クリエイティブのインベントリで「Realistic(リアル)」を検索。調整は `/water gui` かビデオ設定の「水の設定...」から。
 
-Sodium や Iris など描画に介入するMODとは、安定して動かない場合があります。
 元のMODとこのフォークは(同じMOD IDなので)同時に入れないでください。
 
 ## ビルド
@@ -37,6 +38,7 @@ JDK 25 が必要です。
 ./gradlew build          # Windows: gradlew.bat build
 ```
 `build/libs/` にjarができます。GitHub Actions(`.github/workflows/build.yml`)でもpushごとにビルドされます。
+`libs/sodium-fabric-*.jar` はSodiumメニュー連携のコンパイル時にだけ使います(本家に同梱のものです)。
 
 ## コマンド
 `/water gui`、`/water set <設定名> <値>`、`/water remove` など(元MODと同じ)。例: `/water set qualityPreset 0`

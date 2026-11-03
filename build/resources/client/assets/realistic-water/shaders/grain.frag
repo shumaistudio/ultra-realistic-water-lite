@@ -7,14 +7,12 @@ layout(location = 3) flat in uint vSeed;
 layout(location = 4) flat in vec3 vWorld;
 layout(location = 5) flat in vec3 vNormal;
 layout(location = 6) flat in float vShade;
+layout(location = 7) flat in float vSun;
 layout(location = 0) out vec4 outColor;
 
 #define SAND_TEX_BINDING 2
-#define SHADOW_BINDING 3
-#define REGION_LIGHT_BINDING 4
-#define LIGHTMAP_BINDING 5
-#define COLOR_LIGHT_BINDING 6
-#include "shadow.glsl"
+#define REGION_LIGHT_BINDING 3
+#define LIGHTMAP_BINDING 4
 #include "region_light.glsl"
 #include "fluid_light.glsl"
 #include "sand_shade.glsl"
@@ -30,6 +28,6 @@ void main() {
     uint s = vSeed;
     vec3 nWorld = normalize(mat3(G.invView) * vNormal);
     vec3 albedo = sandAlbedo(vWorld, nWorld, 0.0) * (0.92 + 0.2 * rand(s));
-    vec2 bs = regionLightAt(relToSim(mat3(G.invView) * pos + vec3(0.0, 0.5, 0.0)));
-    outColor = vec4(sandLight(nWorld, albedo, vShade, pos, bs), 1.0);
+    vec2 bs = regionLightAt(relToSim((G.invView * vec4(pos, 1.0)).xyz + vec3(0.0, 0.5, 0.0)));
+    outColor = vec4(sandLight(nWorld, albedo, vShade, bs) * vSun, 1.0);
 }

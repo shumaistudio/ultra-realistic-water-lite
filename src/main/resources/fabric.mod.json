@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"me.skaffy.client.RealisticWaterClient"
+		],
+		"sodium:config_api_user": [
+			"me.skaffy.client.compat.SodiumOptions"
 		]
 	},
 	"mixins": [
